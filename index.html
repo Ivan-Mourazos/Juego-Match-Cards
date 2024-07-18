@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="author"
+      content="Cristhian Medrano, Marc Ollé, Iván Sánchez, Santiago Cadavid"
+    />
+    <meta
+      name="description"
+      content="Juego de JavaScript para emparejar cartas"
+    />
+
+    <!-- GOOGLE PRE-CONNECT -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin />
+
+    <!-- GOOGLE FONTS -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Oleo+Script:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=Poetsen+One&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- ESTILOS CSS -->
+    <link rel="stylesheet" href="./Estilos_CSS/reset.css" />
+    <link rel="stylesheet" href="./Estilos_CSS/styles.css" />
+
+    <!-- JAVASCRIPT -->
+    <script src="./JS/app.js" type="module"></script>
+    <script src="./JS/visibilityControls.js" type="module"></script>
+
+    <title>MATCH CARDS</title>
+  </head>
+
+  <body class="mainContent">
+    <header class="centered">
+      <h1 id="title">MATCH CARDS</h1>
+      <form class="inputBox">
+        <label for="user" id="userLabel"></label>
+        <input
+          type="text"
+          id="user"
+          name="user"
+          placeholder="Tu nombre"
+          required
+        />
+        <button id="startGame">Iniciar juego!</button>
+      </form>
+    </header>
+
+    <main id="gameContent">
+      <section class="container">
+        <!-- Las tarjetas se agregarán aquí dinámicamente con JavaScript -->
+      </section>
+      <button type="reset" id="resetBtn">Reiniciar</button>
+      <button type="reset" id="exitBtn">Salir</button>
+    </main>
+    <footer class="divFooter">
+      <p id="copyright">&copy;2024 HACK A BOSS</p>
+    </footer>
+  </body>
+</html>

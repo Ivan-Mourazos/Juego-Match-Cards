@@ -1,0 +1,736 @@
+/* 
+██╗   ██╗ █████╗ ██████╗ ██╗ █████╗ ██████╗ ██╗     ███████╗███████╗
+██║   ██║██╔══██╗██╔══██╗██║██╔══██╗██╔══██╗██║     ██╔════╝██╔════╝
+██║   ██║███████║██████╔╝██║███████║██████╔╝██║     █████╗  ███████╗
+╚██╗ ██╔╝██╔══██║██╔══██╗██║██╔══██║██╔══██╗██║     ██╔══╝  ╚════██║
+ ╚████╔╝ ██║  ██║██║  ██║██║██║  ██║██████╔╝███████╗███████╗███████║
+  ╚═══╝  ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝╚═╝  ╚═╝╚═════╝ ╚══════╝╚══════╝╚══════╝ */
+
+:root {
+  --text-font-family: "Poetsen One", "Arial", "sans-serif";
+  --title-font-family: "Oleo Script", "Arial", "sans-serif";
+  --main-background-color: rgba(114, 181, 197, 0.6);
+  --color-text: rgb(19, 19, 19);
+  --nota-baja-color: rgb(203, 42, 73);
+  --nota-media-color: rgb(211, 214, 49);
+  --nota-alta-color: rgb(53, 235, 77);
+  --nota-muy-alta-color: rgb(53, 229, 235);
+  --button-text-color: rgb(232, 232, 232);
+}
+
+/* 
+ ██████╗ ███████╗███╗   ██╗███████╗██████╗  █████╗ ██╗
+██╔════╝ ██╔════╝████╗  ██║██╔════╝██╔══██╗██╔══██╗██║
+██║  ███╗█████╗  ██╔██╗ ██║█████╗  ██████╔╝███████║██║
+██║   ██║██╔══╝  ██║╚██╗██║██╔══╝  ██╔══██╗██╔══██║██║
+╚██████╔╝███████╗██║ ╚████║███████╗██║  ██║██║  ██║███████╗
+ ╚═════╝ ╚══════╝╚═╝  ╚═══╝╚══════╝╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝ */
+
+html {
+  width: 100vw;
+  height: 100vh;
+}
+
+/* 
+██╗  ██╗███████╗ █████╗ ██████╗ ███████╗██████╗ 
+██║  ██║██╔════╝██╔══██╗██╔══██╗██╔════╝██╔══██╗
+███████║█████╗  ███████║██║  ██║█████╗  ██████╔╝
+██╔══██║██╔══╝  ██╔══██║██║  ██║██╔══╝  ██╔══██╗
+██║  ██║███████╗██║  ██║██████╔╝███████╗██║  ██║
+╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝╚═════╝ ╚══════╝╚═╝  ╚═╝ */
+
+header {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+h1#title {
+  width: 100%;
+  font-size: 3rem;
+  font-family: var(--title-font-family);
+  text-shadow: 4px 4px 8px rgba(0, 0, 0, 2);
+  margin-bottom: 2rem;
+  margin-top: 2rem;
+  animation: anim 5s infinite;
+  min-width: 330px;
+}
+
+form.inputBox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+input[type="text"]#user {
+  font-family: var(--text-font-family);
+  font-style: italic;
+  font-weight: bolder;
+  color: var(--color-text);
+  background-color: var(--main-background-color);
+  font-size: 1.5rem;
+  border: none;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 1);
+  height: 3rem;
+  width: 15rem;
+  outline: none;
+  text-align: center;
+  animation: anim2 5s infinite;
+}
+
+button#startGame {
+  font-family: var(--text-font-family);
+  font-weight: bolder;
+  height: 3rem;
+  width: 15rem;
+  margin-top: 1.5rem;
+  background-color: var(--main-background-color);
+  color: var(--color-text);
+  border: none;
+  padding: 2px 5px;
+  font-size: 1.5rem;
+  cursor: pointer;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 1);
+}
+
+button#startGame {
+  animation: anim2 5s infinite;
+}
+
+/*
+██████╗  ██████╗ ██████╗ ██╗   ██╗
+██╔══██╗██╔═══██╗██╔══██╗╚██╗ ██╔╝
+██████╔╝██║   ██║██║  ██║ ╚████╔╝ 
+██╔══██╗██║   ██║██║  ██║  ╚██╔╝
+██████╔╝╚██████╔╝██████╔╝   ██║
+╚═════╝  ╚═════╝ ╚═════╝    ╚═╝    */
+
+body {
+  font-family: var(--text-font-family);
+  background-color: var(--div-background-color);
+  color: var(--color-text);
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  place-items: center;
+  font-weight: bold;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* 
+███╗   ███╗ █████╗ ██╗███╗   ██╗
+████╗ ████║██╔══██╗██║████╗  ██║
+██╔████╔██║███████║██║██╔██╗ ██║
+██║╚██╔╝██║██╔══██║██║██║╚██╗██║
+██║ ╚═╝ ██║██║  ██║██║██║ ╚████║
+╚═╝     ╚═╝╚═╝  ╚═╝╚═╝╚═╝  ╚═══╝ */
+
+main {
+  background-color: var(--main-background-color);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 1);
+  position: relative;
+  min-height: 360px;
+  max-height: 360px;
+  min-width: 280px;
+  max-width: 280px;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem 1rem 1.5rem 1rem;
+  margin: 0.5rem 0.5rem;
+  gap: 0.5rem;
+  border-radius: 1rem;
+  order: 1;
+}
+
+.container {
+  margin-top: 3rem;
+  margin-bottom: 1rem;
+  height: 100%;
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.8rem;
+}
+
+article ul {
+  width: 100%;
+  height: 100%;
+  transition: transform 1s;
+  transform-style: preserve-3d;
+  border-radius: 0.5rem;
+}
+
+li {
+  width: 100%;
+  height: 100%;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 1);
+}
+
+.card {
+  height: 100%;
+  width: 100%;
+  transition: transform 0.6s;
+  transform-style: preserve-3d;
+  perspective: 600px;
+  border-radius: 0.5rem;
+  cursor: pointer;
+}
+
+.card:hover {
+  transform: scale(1.1);
+}
+
+.card.flipped {
+  transform: rotateY(180deg);
+  transition: transform 0.5s;
+}
+
+.front,
+.back {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  backface-visibility: hidden;
+}
+
+.back {
+  border-radius: 0.5rem;
+  background: transparent;
+  transform: rotateY(180deg);
+}
+
+.front {
+  border-radius: 0.5rem;
+  background: transparent;
+}
+.front img {
+  height: 100%;
+  width: 100%;
+  object-fit: contain;
+  backface-visibility: hidden;
+  border-radius: 0.5rem;
+}
+
+.back img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  padding: 0.3rem;
+}
+
+/* 
+███████╗ ██████╗  ██████╗ ████████╗███████╗██████╗ 
+██╔════╝██╔═══██╗██╔═══██╗╚══██╔══╝██╔════╝██╔══██╗
+█████╗  ██║   ██║██║   ██║   ██║   █████╗  ██████╔╝
+██╔══╝  ██║   ██║██║   ██║   ██║   ██╔══╝  ██╔══██╗
+██║     ╚██████╔╝╚██████╔╝   ██║   ███████╗██║  ██║
+╚═╝      ╚═════╝  ╚═════╝    ╚═╝   ╚══════╝╚═╝  ╚═╝ */
+
+.divFooter {
+  justify-content: center;
+  position: fixed;
+  bottom: 0;
+  font-family: var(--text-font-family);
+  color: var(--color-text);
+  font-size: 0.5rem;
+}
+
+/* 
+ ██████╗██╗      █████╗ ███████╗███████╗███████╗
+██╔════╝██║     ██╔══██╗██╔════╝██╔════╝██╔════╝
+██║     ██║     ███████║███████╗█████╗  ███████╗
+██║     ██║     ██╔══██║╚════██║██╔══╝  ╚════██║
+╚██████╗███████╗██║  ██║███████║███████╗███████║
+ ╚═════╝╚══════╝╚═╝  ╚═╝╚══════╝╚══════╝╚══════╝
+ ██████╗ ██████╗ ███╗   ███╗██████╗  █████╗ ██████╗ ████████╗██╗██████╗  █████╗ ███████╗
+██╔════╝██╔═══██╗████╗ ████║██╔══██╗██╔══██╗██╔══██╗╚══██╔══╝██║██╔══██╗██╔══██╗██╔════╝
+██║     ██║   ██║██╔████╔██║██████╔╝███████║██████╔╝   ██║   ██║██║  ██║███████║███████╗
+██║     ██║   ██║██║╚██╔╝██║██╔═══╝ ██╔══██║██╔══██╗   ██║   ██║██║  ██║██╔══██║╚════██║
+╚██████╗╚██████╔╝██║ ╚═╝ ██║██║     ██║  ██║██║  ██║   ██║   ██║██████╔╝██║  ██║███████║
+ ╚═════╝ ╚═════╝ ╚═╝     ╚═╝╚═╝     ╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝   ╚═╝╚═════╝ ╚═╝  ╚═╝╚══════╝ */
+
+.hidden {
+  display: none;
+}
+
+.parteOculta {
+  visibility: hidden;
+}
+
+.parteVisible {
+  visibility: visible;
+}
+
+.matched {
+  animation: matched 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+  cursor: default;
+}
+
+.nota-baja {
+  color: var(--nota-baja-color);
+}
+
+.nota-media {
+  color: var(--nota-media-color);
+}
+
+.nota-alta {
+  color: var(--nota-alta-color);
+}
+
+.nota-muy-alta {
+  color: var(--nota-muy-alta-color);
+}
+
+.borroso {
+  filter: blur(3px);
+}
+
+/* 
+██████╗ ██╗██╗   ██╗███████╗
+██╔══██╗██║██║   ██║██╔════╝
+██║  ██║██║██║   ██║███████╗
+██║  ██║██║╚██╗ ██╔╝╚════██║
+██████╔╝██║ ╚████╔╝ ███████║
+╚═════╝ ╚═╝  ╚═══╝  ╚══════╝ */
+
+#divBackground {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-image: url("../images/fondo\ de\ alienigenas.jpg");
+  background-size: cover;
+  background-position: center;
+  z-index: -2;
+}
+
+#divUser {
+  position: absolute;
+  top: 4%;
+  left: 5%;
+  font-family: var(--text-font-family);
+  padding: 2px 5px;
+  border-radius: 10px;
+  background-color: transparent;
+  font-size: 0.6rem;
+  white-space: nowrap;
+  color: var(--color-text);
+  animation: matched cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+}
+
+#divIntentos {
+  position: absolute;
+  top: 4%;
+  right: 5%;
+  font-family: var(--text-font-family);
+  padding: 2px 5px;
+  border-radius: 10px;
+  background-color: transparent;
+  font-size: 0.8rem;
+  white-space: nowrap;
+  color: var(--color-text);
+  animation: matched cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+}
+
+#divTextContador {
+  position: absolute;
+  top: 13%;
+  left: 5%;
+  padding: 2px 5px;
+  border-radius: 5px;
+  background-color: transparent;
+  border-radius: 10px;
+  font-size: 0.8rem;
+  white-space: nowrap;
+  font-family: "Poetsen One";
+  font-weight: bolder;
+  color: var(--color-text);
+  text-align: left;
+  animation: matched cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+}
+
+#divFallos {
+  position: absolute;
+  top: 13%;
+  right: 5%;
+  padding: 2px 5px;
+  border-radius: 10px;
+  background-color: transparent;
+  font-size: 0.8rem;
+  white-space: nowrap;
+  font-family: "Poetsen One";
+  font-weight: bolder;
+  color: var(--color-text);
+  text-align: left;
+  animation: matched cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+}
+
+#divResultadoJuego {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  min-width: 280px;
+  max-width: 280px;
+  padding: 1rem;
+  padding-bottom: 2.7rem;
+  gap: 0.5rem;
+  color: var(--color-text);
+  background-color: var(--main-background-color);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 1);
+  border-radius: 1rem;
+  position: absolute; /* importante no borrar o se jode todo */
+  top: 25%;
+  font-size: 0.8rem;
+}
+
+#divRanking {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: repeat(6, 1fr);
+  grid-template-areas:
+    "titleUsuarios titleNotas"
+    "usuarios notas"
+    "usuarios notas"
+    "usuarios notas"
+    "usuarios notas"
+    "usuarios notas";
+  min-width: 280px;
+  max-width: 280px;
+  border-radius: 1rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 1);
+  color: var(--color-text);
+  background-color: var(--main-background-color);
+  text-align: center;
+  padding: 0rem 0.5rem 0.5rem 0.5rem;
+  gap: 0.2rem;
+  margin-bottom: 0.5rem;
+  order: 3;
+  width: 100vw;
+}
+
+.pRankingUsuario {
+  grid-area: "usuarios";
+  font-size: 0.8rem;
+  animation: matched cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+  padding: 2px 5px;
+  border-radius: 10px;
+  background-color: transparent;
+}
+
+.pRankingNota {
+  grid-area: "notas";
+  font-size: 0.8rem;
+  animation: matched cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+  padding: 2px 5px;
+  border-radius: 10px;
+  background-color: transparent;
+}
+
+/* 
+██████╗  ██████╗ ████████╗ ██████╗ ███╗   ██╗███████╗███████╗
+██╔══██╗██╔═══██╗╚══██╔══╝██╔═══██╗████╗  ██║██╔════╝██╔════╝
+██████╔╝██║   ██║   ██║   ██║   ██║██╔██╗ ██║█████╗  ███████╗
+██╔══██╗██║   ██║   ██║   ██║   ██║██║╚██╗██║██╔══╝  ╚════██║
+██████╔╝╚██████╔╝   ██║   ╚██████╔╝██║ ╚████║███████╗███████║
+╚═════╝  ╚═════╝    ╚═╝    ╚═════╝ ╚═╝  ╚═══╝╚══════╝╚══════╝ */
+
+#resetBtn {
+  position: absolute;
+  bottom: 4%;
+  right: 5%;
+  background-color: transparent;
+  color: var(--color-text);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 1);
+  font-size: 0.8rem;
+  border: none;
+  border-radius: 10px;
+  padding: 2px 5px;
+  cursor: pointer;
+  font-family: var(--text-font-family);
+  font-weight: bolder;
+  transition: color 0.3s, text-shadow 0.3s;
+}
+
+#exitBtn {
+  position: absolute;
+  bottom: 4%;
+  left: 5.5%;
+  background-color: transparent;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 1);
+  color: var(--color-text);
+  font-size: 0.8rem;
+  padding: 2px 5px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-family: var(--text-font-family);
+  font-weight: bolder;
+  transition: color 0.3s, text-shadow 0.3s;
+}
+
+.btnRanking {
+  position: absolute;
+  bottom: 4%;
+  background-color: transparent;
+  color: var(--color-text);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 1);
+  font-size: 0.8rem;
+  border: none;
+  border-radius: 10px;
+  padding: 2px 5px;
+  cursor: pointer;
+  font-family: var(--text-font-family);
+  font-weight: bolder;
+  transition: color 0.3s, text-shadow 0.3s;
+}
+
+.btnRankingPulsado {
+  background-color: transparent;
+
+  animation: matched cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+}
+
+#exitBtn:hover,
+#resetBtn:hover,
+#btnGameAgain:hover,
+#btnExitGame:hover,
+.btnRanking:hover {
+  color: var(--color-text);
+  text-shadow: 0 0 5px rgba(19, 19, 19, 0.5);
+}
+
+#exitBtn:focus,
+#resetBtn:focus,
+#btnGameAgain:focus,
+#btnExitGame:focus,
+.btnRanking:focus {
+  color: var(--color-text);
+  text-shadow: 0 0 5px rgba(19, 19, 19, 0.5);
+}
+
+#btnGameAgain {
+  position: absolute;
+  bottom: 8%;
+  left: 5%;
+  background-color: transparent;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 1);
+  color: var(--color-text);
+  padding: 2px 5px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-family: var(--text-font-family);
+  font-weight: bolder;
+  transition: color 0.3s, text-shadow 0.3s;
+  font-size: 1rem;
+}
+
+#btnExitGame {
+  position: absolute;
+  bottom: 8%;
+  right: 5%;
+  background-color: transparent;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 1);
+  color: var(--color-text);
+  padding: 2px 5px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-family: var(--text-font-family);
+  font-weight: bolder;
+  transition: color 0.3s, text-shadow 0.3s;
+  font-size: 1rem;
+}
+
+/* 
+ █████╗ ███╗   ██╗██╗███╗   ███╗ █████╗  ██████╗██╗ ██████╗ ███╗   ██╗███████╗███████╗
+██╔══██╗████╗  ██║██║████╗ ████║██╔══██╗██╔════╝██║██╔═══██╗████╗  ██║██╔════╝██╔════╝
+███████║██╔██╗ ██║██║██╔████╔██║███████║██║     ██║██║   ██║██╔██╗ ██║█████╗  ███████╗
+██╔══██║██║╚██╗██║██║██║╚██╔╝██║██╔══██║██║     ██║██║   ██║██║╚██╗██║██╔══╝  ╚════██║
+██║  ██║██║ ╚████║██║██║ ╚═╝ ██║██║  ██║╚██████╗██║╚██████╔╝██║ ╚████║███████╗███████║
+╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝╚═╝     ╚═╝╚═╝  ╚═╝ ╚═════╝╚═╝ ╚═════╝ ╚═╝  ╚═══╝╚══════╝╚══════╝ */
+
+@keyframes matched {
+  0% {
+    box-shadow: inset 0 0 0 0 rgb(0, 0, 0);
+  }
+
+  100% {
+    box-shadow: inset 0 0 14px 0px rgb(0, 0, 0);
+  }
+}
+
+@keyframes anim {
+  0% {
+    transform: scale(1);
+    color: rgb(200, 227, 215);
+  }
+
+  25% {
+    transform: scale(0.95);
+    color: rgb(255, 182, 193);
+  }
+
+  50% {
+    transform: scale(0.9);
+    color: rgb(173, 216, 230);
+  }
+
+  75% {
+    transform: scale(0.95);
+    color: rgb(255, 240, 245);
+  }
+
+  100% {
+    transform: scale(1);
+    color: rgb(255, 250, 205);
+  }
+}
+
+@keyframes anim2 {
+  0% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(0.9);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* 
+███╗   ███╗███████╗██████╗ ██╗ █████╗ 
+████╗ ████║██╔════╝██╔══██╗██║██╔══██╗
+██╔████╔██║█████╗  ██║  ██║██║███████║
+██║╚██╔╝██║██╔══╝  ██║  ██║██║██╔══██║
+██║ ╚═╝ ██║███████╗██████╔╝██║██║  ██║
+╚═╝     ╚═╝╚══════╝╚═════╝ ╚═╝╚═╝  ╚═╝
+
+ ██████╗ ██╗   ██╗███████╗██████╗ ██╗   ██╗
+██╔═══██╗██║   ██║██╔════╝██╔══██╗╚██╗ ██╔╝
+██║   ██║██║   ██║█████╗  ██████╔╝ ╚████╔╝ 
+██║▄▄ ██║██║   ██║██╔══╝  ██╔══██╗  ╚██╔╝
+╚██████╔╝╚██████╔╝███████╗██║  ██║   ██║
+ ╚══▀▀═╝  ╚═════╝ ╚══════╝╚═╝  ╚═╝   ╚═╝    */
+
+/*  */
+
+/* PANTALLAS PEQUEÑAS */
+
+/*  */
+
+@media (min-width: 500px) and (max-width: 700px) {
+  /* GENERAL */
+
+  html {
+    font-size: 20.8px;
+  }
+
+  /* MAIN */
+
+  main {
+    min-height: 468px;
+    max-height: 468px;
+    min-width: 364px;
+    max-width: 364px;
+  }
+
+  /* DIVS */
+
+  #divResultadoJuego {
+    min-width: 364px;
+    max-width: 364px;
+  }
+
+  #divRanking {
+    min-width: 364px;
+    max-width: 364px;
+  }
+}
+
+/*  */
+
+/* PANTALLAS MEDIANAS */
+
+/*  */
+
+@media (min-width: 700px) and (max-width: 2000px) {
+  /* GENERAL */
+
+  html {
+    font-size: 25.6px;
+  }
+
+  /* MAIN */
+
+  main {
+    min-height: 576px;
+    max-height: 576px;
+    min-width: 448px;
+    max-width: 448px;
+  }
+
+  /* DIVS */
+
+  #divResultadoJuego {
+    min-width: 448px;
+    max-width: 448px;
+  }
+
+  #divRanking {
+    min-width: 448px;
+    max-width: 448px;
+  }
+}
+
+/*  */
+
+/* PANTALLAS GRANDES */
+
+/*  */
+
+@media (min-width: 2000px) {
+  /* GENERAL */
+
+  html {
+    font-size: 30.4px;
+  }
+
+  /* MAIN */
+
+  main {
+    min-height: 684px;
+    max-height: 684px;
+    min-width: 532px;
+    max-width: 532px;
+  }
+
+  /* DIVS */
+
+  #divResultadoJuego {
+    min-width: 532px;
+    max-width: 532px;
+  }
+
+  #divRanking {
+    min-width: 532px;
+    max-width: 532px;
+  }
+}
