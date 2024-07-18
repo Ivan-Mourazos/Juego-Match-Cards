@@ -14,6 +14,7 @@ mainElements.appendChild(divUser);
 
 //Texto que pone el valor del input a user
 const user = document.getElementById("user");
+
 function handleInputChange() {
   // Recupera el valor del input
   const userName = user.value;
@@ -23,9 +24,11 @@ function handleInputChange() {
 }
 
 // Añade el controlador de eventos al input
-user.addEventListener("change", handleInputChange);
+if (user) {
+  user.addEventListener("change", handleInputChange);
+}
 const h2 = document.createElement("h2");
-h2.textContent = user.value;
+h2.textContent = user ? user.value : "";
 divUser.appendChild(h2);
 
 // Creamos un div para el contador
@@ -50,7 +53,7 @@ divContadorDeFallos.id = "divFallos";
 divContadorDeFallos.textContent = "Fallos: 0";
 mainElements.appendChild(divContadorDeFallos);
 
-// Creamos un div para mostrar mostrar el body con todo oculto y solo el nuevo div con un mensaje de gracias por jugar y un resultado de su partida
+// Creamos un div para mostrar el body con todo oculto y solo el nuevo div con un mensaje de gracias por jugar y un resultado de su partida
 const divResultado = document.createElement("div");
 divResultado.id = "divResultadoJuego";
 mainElements.appendChild(divResultado);
@@ -96,34 +99,20 @@ divRanking.appendChild(pRankingNota);
 
 const recuperarValoresYActualizarRanking = () => {
   // Recupera los valores del localStorage
-  const user = localStorage.getItem("user");
-  const nota = parseFloat(localStorage.getItem("nota"));
-
-  // Recupera el array del localStorage o crea uno nuevo si no existe
   let arrayUsuarioNota =
     JSON.parse(localStorage.getItem("arrayUsuarioNota")) || [];
 
-  // Busca si el usuario ya existe en el array
-  const usuarioExistente = arrayUsuarioNota.find(
-    (elemento) => elemento.user === user
-  );
+  // Actualiza el ranking visual
+  actualizarRankingVisual(arrayUsuarioNota);
+};
 
-  if (usuarioExistente) {
-    // Si el usuario existe y la nueva nota es mayor que la existente, actualiza la nota
-    if (nota > usuarioExistente.nota) {
-      usuarioExistente.nota = nota;
-    }
-  } else {
-    // Si el usuario no existe, añade el nuevo usuario y nota al array
-    // Si el array ya tiene 5 elementos, elimina el primer elemento
-    if (arrayUsuarioNota.length === 5) {
-      arrayUsuarioNota.shift();
-    }
-    arrayUsuarioNota.push({ user, nota });
-  }
+const actualizarRankingVisual = (arrayUsuarioNota) => {
+  // Limpia el contenido actual del divRanking
+  divRanking.innerHTML = "";
 
-  // Guarda el array en el localStorage
-  localStorage.setItem("arrayUsuarioNota", JSON.stringify(arrayUsuarioNota));
+  // Añadir los títulos de las columnas nuevamente
+  divRanking.appendChild(pRankingUser);
+  divRanking.appendChild(pRankingNota);
 
   // Ordena el array por la nota de mayor a menor
   arrayUsuarioNota.sort((a, b) => b.nota - a.nota);
@@ -155,7 +144,41 @@ const recuperarValoresYActualizarRanking = () => {
   });
 };
 
-// Llama a la función para recuperar los valores y actualizar el ranking
+// Función para guardar la nota y actualizar el ranking
+const guardarNotaYActualizarRanking = (nota) => {
+  const user = localStorage.getItem("user");
+
+  if (!user || isNaN(nota) || nota < 1 || nota > 10) {
+    console.warn("Nota o usuario inválidos, no se guardará en el ranking.");
+    return;
+  }
+
+  let arrayUsuarioNota =
+    JSON.parse(localStorage.getItem("arrayUsuarioNota")) || [];
+
+  const usuarioExistente = arrayUsuarioNota.find(
+    (elemento) => elemento.user === user
+  );
+
+  if (usuarioExistente) {
+    if (nota > usuarioExistente.nota) {
+      usuarioExistente.nota = nota;
+    } else if (nota === usuarioExistente.nota) {
+      console.log("La nota es igual a la existente, no se actualizará.");
+      return;
+    }
+  } else {
+    if (arrayUsuarioNota.length === 5) {
+      arrayUsuarioNota.shift();
+    }
+    arrayUsuarioNota.push({ user, nota });
+  }
+
+  localStorage.setItem("arrayUsuarioNota", JSON.stringify(arrayUsuarioNota));
+  actualizarRankingVisual(arrayUsuarioNota);
+};
+
+// Llamar a recuperarValoresYActualizarRanking al cargar la página para actualizar el ranking inicial
 recuperarValoresYActualizarRanking();
 
 // Creamos un botón para reiniciar el juego
@@ -171,20 +194,22 @@ btnExitGame.textContent = "SALIR";
 divResultado.appendChild(btnExitGame);
 
 //Funcion para que H2 se muestre el valor del input user y siempre con la primera letra en mayúscula
-user.addEventListener("input", function () {
-  const maxLength = 20;
-  const userValue = user.value;
-  if (userValue.length > maxLength) {
-    user.value = userValue.slice(0, maxLength);
-  }
+if (user) {
+  user.addEventListener("input", function () {
+    const maxLength = 20;
+    const userValue = user.value;
+    if (userValue.length > maxLength) {
+      user.value = userValue.slice(0, maxLength);
+    }
 
-  h2.textContent = user.value
-    .split(" ")
-    .map(function (word) {
-      return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
-    })
-    .join(" ");
-});
+    h2.textContent = user.value
+      .split(" ")
+      .map(function (word) {
+        return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+      })
+      .join(" ");
+  });
+}
 
 // Funcion para activar contador y ocultarlo al finalizar
 
@@ -226,7 +251,15 @@ function startTimer() {
   }, 100);
 }
 
-startGame.addEventListener("click", startTimer);
+const startGame = document.getElementById("startGame");
+if (startGame) {
+  startGame.addEventListener("click", startTimer);
+}
+
+function endGame(notaFinal) {
+  // Guarda la nota y actualiza el ranking
+  guardarNotaYActualizarRanking(notaFinal);
+}
 
 function resetGame() {
   // Detener el temporizador actual
@@ -234,86 +267,35 @@ function resetGame() {
 
   // Reiniciar el temporizador
   startTimer();
+
+  // Obtener y guardar la nota final (por ejemplo, 8.5 para propósitos de demostración)
+  const notaFinal = parseFloat(localStorage.getItem("nota"));
+  endGame(notaFinal);
+
+  // Reinicia la nota en el localStorage
+  localStorage.setItem("nota", 0);
 }
+
+function salirDelJuego() {
+  // Obtener y guardar la nota final (por ejemplo, 8.5 para propósitos de demostración)
+  const notaFinal = parseFloat(localStorage.getItem("nota"));
+  endGame(notaFinal);
+
+  // Lógica adicional para salir del juego, si es necesario
+}
+
 const resetBtnController = document.getElementById("resetBtn");
-// Añadir el controlador de eventos al botón de reset
-resetBtnController.addEventListener("click", resetGame);
+if (resetBtnController) {
+  // Añadir el controlador de eventos al botón de reset
+  resetBtnController.addEventListener("click", resetGame);
+}
+
 const btnGameAgainContent = document.getElementById("btnGameAgain");
-btnGameAgainContent.addEventListener("click", resetGame);
+if (btnGameAgainContent) {
+  btnGameAgainContent.addEventListener("click", resetGame);
+}
 
-//
-//  IceHeaven, Ivan Sanchez, Marc Ollé, Santiago Cadavid..
-//         ─────▄██▀▀▀▀▀▀▀▀▀▀▀▀▀██▄─────
-//         ────███───────────────███────
-//         ───███─────────────────███───
-//         ──███───▄▀▀▄─────▄▀▀▄───███──
-//         ─████─▄▀────▀▄─▄▀────▀▄─████─
-//         ─████──▄████─────████▄──█████
-//         █████─██▓▓▓██───██▓▓▓██─█████
-//         █████─██▓█▓██───██▓█▓██─█████
-//         █████─██▓▓▓█▀─▄─▀█▓▓▓██─█████
-//         ████▀──▀▀▀▀▀─▄█▄─▀▀▀▀▀──▀████
-//         ███─▄▀▀▀▄────███────▄▀▀▀▄─███
-//         ███──▄▀▄─█──█████──█─▄▀▄──███
-//         ███─█──█─█──█████──█─█──█─███
-//         ███─█─▀──█─▄█████▄─█──▀─█─███
-//         ███▄─▀▀▀▀──█─▀█▀─█──▀▀▀▀─▄███
-//         ████─────────────────────████
-//         ─███───▀█████████████▀───████
-//         ─███───────█─────█───────████
-//         ─████─────█───────█─────█████
-//         ───███▄──█────█────█──▄█████─
-//         ─────▀█████▄▄███▄▄█████▀─────
-//         ──────────█▄─────▄█──────────
-//         ──────────▄█─────█▄──────────
-//         ───────▄████─────████▄───────
-//         ─────▄███████───███████▄─────
-//         ───▄█████████████████████▄───
-//         ─▄███▀───███████████───▀███▄─
-//         ███▀─────███████████─────▀███
-//         ▌▌▌▌▒▒───███████████───▒▒▐▐▐▐
-//         ─────▒▒──███████████──▒▒─────
-//         ──────▒▒─███████████─▒▒──────
-//         ───────▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒───────
-//         ─────────████░░█████─────────
-//         ────────█████░░██████────────
-//         ──────███████░░███████───────
-//         ─────█████──█░░█──█████──────
-//         ─────█████──████──█████──────
-//         ──────████──████──████───────
-//         ──────████──████──████───────
-//         ──────████───██───████───────
-//         ──────████───██───████───────
-//         ──────████──████──████───────
-//         ─██────██───████───██─────██─
-//         ─██───████──████──████────██─
-//         ─███████████████████████████─
-//         ─██─────────████──────────██─
-//         ─██─────────████──────────██─
-//         ────────────████─────────────
-//         ─────────────██──────────────
-
-// ██████╗  ██████╗     ██╗   ██╗ ██████╗ ██╗   ██╗
-// ██╔══██╗██╔═══██╗    ╚██╗ ██╔╝██╔═══██╗██║   ██║
-// ██║  ██║██║   ██║     ╚████╔╝ ██║   ██║██║   ██║
-// ██║  ██║██║   ██║      ╚██╔╝  ██║   ██║██║   ██║
-// ██████╔╝╚██████╔╝       ██║   ╚██████╔╝╚██████╔╝
-// ╚═════╝  ╚═════╝        ╚═╝    ╚═════╝  ╚═════╝
-// ██╗    ██╗ █████╗ ███╗   ██╗████████╗    ████████╗ ██████╗
-// ██║    ██║██╔══██╗████╗  ██║╚══██╔══╝    ╚══██╔══╝██╔═══██╗
-// ██║ █╗ ██║███████║██╔██╗ ██║   ██║          ██║   ██║   ██║
-// ██║███╗██║██╔══██║██║╚██╗██║   ██║          ██║   ██║   ██║
-// ╚███╔███╔╝██║  ██║██║ ╚████║   ██║          ██║   ╚██████╔╝
-//  ╚══╝╚══╝ ╚═╝  ╚═╝╚═╝  ╚═══╝   ╚═╝          ╚═╝    ╚═════╝
-// ██████╗ ██╗      █████╗ ██╗   ██╗    ██╗    ██╗██╗████████╗██╗  ██╗
-// ██╔══██╗██║     ██╔══██╗╚██╗ ██╔╝    ██║    ██║██║╚══██╔══╝██║  ██║
-// ██████╔╝██║     ███████║ ╚████╔╝     ██║ █╗ ██║██║   ██║   ███████║
-// ██╔═══╝ ██║     ██╔══██║  ╚██╔╝      ██║███╗██║██║   ██║   ██╔══██║
-// ██║     ███████╗██║  ██║   ██║       ╚███╔███╔╝██║   ██║   ██║  ██║
-// ╚═╝     ╚══════╝╚═╝  ╚═╝   ╚═╝        ╚══╝╚══╝ ╚═╝   ╚═╝   ╚═╝  ╚═╝
-// ███╗   ███╗███████╗██████╗
-// ████╗ ████║██╔════╝╚════██╗
-// ██╔████╔██║█████╗    ▄███╔╝
-// ██║╚██╔╝██║██╔══╝    ▀▀══╝
-// ██║ ╚═╝ ██║███████╗  ██╗
-// ╚═╝     ╚═╝╚══════╝  ╚═╝
+const btnExitGameElement = document.getElementById("btnExitGame");
+if (btnExitGameElement) {
+  btnExitGameElement.addEventListener("click", salirDelJuego);
+}
