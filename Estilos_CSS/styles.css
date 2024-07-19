@@ -201,6 +201,7 @@ li {
   height: 100%;
   width: 100%;
   backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
   border-radius: 5px;
 }
 
@@ -212,14 +213,13 @@ li {
   height: 100%;
   width: 100%;
   object-fit: contain;
-  backface-visibility: hidden;
 }
 
 .back img {
   width: 100%;
   height: 100%;
   object-fit: contain;
-  backface-visibility: hidden;
+  padding: 0.25rem;
 }
 
 /* 
