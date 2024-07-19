@@ -252,8 +252,9 @@ function startTimer() {
 }
 
 const startGame = document.getElementById("startGame");
+
 if (startGame) {
-  startGame.addEventListener("click", startTimer);
+  startGame.addEventListener("click", resetGame);
 }
 
 function endGame(notaFinal) {

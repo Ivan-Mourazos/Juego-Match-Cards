@@ -112,17 +112,17 @@ document.addEventListener("DOMContentLoaded", function () {
   divTextContadorContent.classList.add("hidden");
   divIntentosContent.classList.add("hidden");
   resetBtnContent.classList.add("hidden");
-
   divRankingContent.classList.add("hidden");
-  for (let i = 0; i < pFromRanking.length; i++) {
-    pFromRanking[i].classList.add("hidden");
-  }
   divRankingContent.classList.add("parteOculta");
-
   startGameBtn.addEventListener("click", startGame);
   resetBtnController2.addEventListener("click", resetGame);
 
+  for (let i = 0; i < pFromRanking.length; i++) {
+    pFromRanking[i].classList.add("hidden");
+  }
+
   //Funcion para empezar el juego
+
   function startGame(event) {
     event.preventDefault();
     if (userInput.value.trim() !== "") {
@@ -136,22 +136,11 @@ document.addEventListener("DOMContentLoaded", function () {
       divRankingContent.classList.remove("hidden");
       divBackgroundContent.classList.add("borroso");
       divResultadoJuegoContent.classList.add("parteOculta");
-
+      counters.reset();
       initializeGame();
     }
   }
-  //Funcion para reiniciar el juego
-  function resetGame() {
-    counters.reset();
-    container.innerHTML = "";
-    divResultadoJuegoContent.classList.add("parteOculta");
-    divResultadoJuegoContent.classList.remove("parteVisible");
-    gameContent.classList.remove("parteOculta");
-    btnRankingContent.classList.remove("hidden");
 
-    matchedCards = 0;
-    initializeGame();
-  }
   //Funcion para inicializar el juego
   function initializeGame() {
     container.innerHTML = "";
@@ -178,7 +167,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
       // Asignar imagen al frente
       const frontImg = document.createElement("img");
-      frontImg.src = "./images/logohabnew.png";
+      frontImg.src = "./images/logo-cartas.png";
       frontImg.alt = "logo hack a boss";
       front.appendChild(frontImg);
       content.appendChild(front);
@@ -198,7 +187,7 @@ document.addEventListener("DOMContentLoaded", function () {
       flippedCards.push(currentCard);
     }
 
-    // Si hay dos tarjetas volteadas
+    // Si hay dos tarjetas volteadas y compararlas para ver si son iguales
     if (flippedCards.length === 2) {
       const img1Value =
         flippedCards[0].querySelector(".back img").dataset.value;
@@ -230,6 +219,19 @@ document.addEventListener("DOMContentLoaded", function () {
   exitMainBtn.addEventListener("click", function () {
     location.reload();
   });
+
+  //Funcion para reiniciar el juego
+  function resetGame() {
+    counters.reset();
+    container.innerHTML = "";
+    divResultadoJuegoContent.classList.add("parteOculta");
+    divResultadoJuegoContent.classList.remove("parteVisible");
+    gameContent.classList.remove("parteOculta");
+    btnRankingContent.classList.remove("hidden");
+
+    matchedCards = 0;
+    initializeGame();
+  }
 
   // Función botón de volver a jugar desde el div del resultado
   const btnGameAgainContent = document.getElementById("btnGameAgain");
@@ -263,7 +265,7 @@ btnRankingContent.addEventListener("click", function () {
   const pFromRanking = document.getElementsByClassName("pRanking");
   const divRankingContent = document.getElementById("divRanking");
   divRankingContent.classList.toggle("parteOculta");
-  btnRankingContent.classList.toggle("btnRankingPulsado");
+  btnRankingContent.classList.toggle("btnPulsado");
 
   for (let i = 0; i < pFromRanking.length; i++) {
     pFromRanking[i].classList.toggle("hidden");
